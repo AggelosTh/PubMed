@@ -1,10 +1,11 @@
 import re
 import matplotlib.pyplot as plt
-# from wordcloud import WordCloud
+from wordcloud import WordCloud
 from nltk.corpus import stopwords
 import nltk
 import random
 import seaborn as sns
+import pandas as pd
 
 nltk.download('stopwords')
 nltk.download('wordnet')
@@ -26,3 +27,14 @@ def clean_text_data(text: str) -> str:
     joined_text = " ".join(word for word in tokens_without_sw)
     final_text = re.sub(r"(@\[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)|^rt|http.+?", "", joined_text)
     return final_text  
+
+
+def create_wordcloud(df: pd.DataFrame):
+
+    text = ' '.join(df['text'].dropna())
+    wordcloud = WordCloud().generate(text)
+
+    # Display the wordcloud image:
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis("off")
+    plt.show()
