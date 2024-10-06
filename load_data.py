@@ -3,11 +3,17 @@ import numpy as np
 import logging
 import ast
 import utils
+
 logger = logging.getLogger(__name__)
 
 df = pd.read_csv("PubMed_Multi_Label_Text_Classification.csv")
 df = df.fillna(value=np.nan)
 df = df.dropna()
+
+columns = list(df.columns)
+mesh_categories = columns[6:]
+
+df['labels'] = list(df[mesh_categories].values)
 
 df['Title'] = df['Title'].astype('string')
 df['abstractText'] = df['abstractText'].astype('string')
