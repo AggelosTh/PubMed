@@ -56,7 +56,7 @@ def draw_text_length_distribution(df:pd.DataFrame):
     cdf = np.cumsum(pdf)
     plt.plot(bins_count[1:], pdf, color="red", label="PDF")
     plt.plot(bins_count[1:], cdf, label="CDF")
-    plt.plot([300, 300], [0, 1], label="250 tokens", color='green')
+    plt.plot([200, 200], [0, 1], label="200 tokens", color='green')
     plt.plot([0, 1000], [0.90, 0.90], label="90%", color='black')
     plt.legend()
     plt.show()
