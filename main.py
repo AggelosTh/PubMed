@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from collections import Counter
-
+from itertools import chain
 
 def plot_label_count(df: pd.DataFrame):
     label_counts = df[['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'L', 'M', 'N', 'Z']].sum()
@@ -23,14 +23,16 @@ def plot_label_count(df: pd.DataFrame):
 
 def  count_most_common_mesh(df: pd.DataFrame):
     
-    total_mesh = sum(df['meshMajor'], [])
+    total_mesh = chain.from_iterable(df['meshMajor'])
     mesh_counts = Counter(total_mesh)
-    most_common_mesh = mesh_counts.most_common(10)
+    most_common_mesh = mesh_counts.most_common(20)
 
     mesh, counts = zip(*most_common_mesh)
+    plt.figure(figsize=(16, 16))
     plt.bar(mesh, counts)
     plt.xticks(rotation=45)
-    plt.title('Top 10 Most Common Elements')
+    plt.title('Top 20 Mesh terms')
     plt.show()
+
 
 count_most_common_mesh(df=df)    
