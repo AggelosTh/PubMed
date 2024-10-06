@@ -1,6 +1,6 @@
 import seaborn as sns
 import pandas as pd
-from load_data import df
+import io
 import matplotlib.pyplot as plt
 from collections import Counter
 from itertools import chain
@@ -12,11 +12,17 @@ def create_wordcloud(df: pd.DataFrame):
     text = ' '.join(df['text'].dropna())
     wordcloud = WordCloud().generate(text)
 
+    buffer = io.BytesIO()
+
     # Display the wordcloud image:
+    plt.figure(figsize=(16, 16))
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis("off")
-    plt.show()
+    plt.savefig(buffer, format='png')
+    plt.close()
+    buffer.seek(0)
 
+    return buffer
 
 def plot_label_count(df: pd.DataFrame):
     label_counts = df[['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'L', 'M', 'N', 'Z']].sum()
@@ -24,13 +30,19 @@ def plot_label_count(df: pd.DataFrame):
     label_df = pd.DataFrame(label_counts, columns=['Count']).reset_index()
     label_df.columns = ['Label', 'Count']
 
-    plt.figure(figsize=(8, 5))
+    plt.figure(figsize=(16, 16))
     sns.barplot(x='Label', y='Count', data=label_df, palette='viridis')
     plt.title('Count of Each Label in the Dataset')
     plt.xlabel('Label')
     plt.ylabel('Count')
     plt.tight_layout()
-    plt.show()
+
+    buffer = io.BytesIO()
+    plt.savefig(buffer, format='png')
+    plt.close()
+    buffer.seek(0)
+
+    return buffer
 
 
 def  count_most_common_mesh(df: pd.DataFrame):
@@ -43,12 +55,17 @@ def  count_most_common_mesh(df: pd.DataFrame):
     sns.barplot(x=mesh, y=counts, palette='pastel')
     plt.xticks(rotation=45)
     plt.title('Top 20 Mesh terms')
-    plt.show()
 
+    buffer = io.BytesIO()
+    plt.savefig(buffer, format='png')
+    plt.close()
+    buffer.seek(0)
+
+    return buffer
 
 def draw_text_length_distribution(df:pd.DataFrame):
 
-    _, _ = plt.subplots()
+    # _, _ = plt.subplots()
     count, bins_count = np.histogram([len(text.split()) for text in df['text']], bins=100)
     
     pdf = count / sum(count)
@@ -59,4 +76,10 @@ def draw_text_length_distribution(df:pd.DataFrame):
     plt.plot([200, 200], [0, 1], label="200 tokens", color='green')
     plt.plot([0, 1000], [0.90, 0.90], label="90%", color='black')
     plt.legend()
-    plt.show()
+
+    buffer = io.BytesIO()
+    plt.savefig(buffer, format='png')
+    plt.close()
+    buffer.seek(0)
+
+    return buffer
