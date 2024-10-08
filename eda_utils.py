@@ -6,10 +6,13 @@ from collections import Counter
 from itertools import chain
 import numpy as np
 from wordcloud import WordCloud
+from utils import clean_text_data
+
 
 def create_wordcloud(df: pd.DataFrame):
 
-    text = ' '.join(df['text'].dropna())
+    df['clean_text'] = df['text'].apply(clean_text_data)
+    text = ' '.join(df['clean_text'].dropna())
     wordcloud = WordCloud().generate(text)
 
     buffer = io.BytesIO()
@@ -45,6 +48,25 @@ def plot_label_count(df: pd.DataFrame):
     return buffer
 
 
+def correlation_between_labels(df):
+    label_columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'L', 'M', 'N', 'Z']
+    label_df = df[label_columns]
+
+    # Compute correlation matrix
+    correlation_matrix = label_df.corr()
+
+    # Plot heatmap
+    plt.figure(figsize=(16, 16))
+    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.5)
+    plt.title('Correlation Heatmap of Labels')
+
+    buffer = io.BytesIO()
+    plt.savefig(buffer, format='png')
+    plt.close()
+    buffer.seek(0)
+
+    return buffer
+
 def  count_most_common_mesh(df: pd.DataFrame):
     
     total_mesh = chain.from_iterable(df['meshMajor'])
@@ -73,7 +95,7 @@ def draw_text_length_distribution(df:pd.DataFrame):
     cdf = np.cumsum(pdf)
     plt.plot(bins_count[1:], pdf, color="red", label="PDF")
     plt.plot(bins_count[1:], cdf, label="CDF")
-    plt.plot([200, 200], [0, 1], label="200 tokens", color='green')
+    plt.plot([300, 300], [0, 1], label="300 tokens", color='green')
     plt.plot([0, 1000], [0.90, 0.90], label="90%", color='black')
     plt.legend()
 

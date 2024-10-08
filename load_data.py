@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 import logging
 import ast
-import utils
 
 logger = logging.getLogger(__name__)
 
@@ -14,11 +13,9 @@ columns = list(df.columns)
 mesh_categories = columns[6:]
 
 df['labels'] = list(df[mesh_categories].values)
-
 df['Title'] = df['Title'].astype('string')
 df['abstractText'] = df['abstractText'].astype('string')
 df['text'] = df['Title'] + ' ' + df['abstractText']
-df['text'] = df['text'].apply(utils.clean_text_data)
 
 print(df.head())
 logger.info(df.info())
