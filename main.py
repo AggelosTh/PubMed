@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 import eda_utils
 from load_data import df
-from mlmodels import SBertModel, sbert, device
+from mlmodel import SBertModel, sbert, device
 import torch
 import logging
 from contextlib import asynccontextmanager
