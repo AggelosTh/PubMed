@@ -9,8 +9,16 @@ from wordcloud import WordCloud
 from utils import clean_text_data
 
 
-def create_wordcloud(df: pd.DataFrame):
+def create_wordcloud(df: pd.DataFrame) -> io.BytesIO:
+    """Creates a wordcloud image from the texts of a dataframe
 
+    Args:
+        df (pd.DataFrame): the input dataframe
+
+    Returns:
+        io.BytesIO: BytesIO object containing the wordcloud image in PNG format.
+    """
+    # Remove stopwords and clean the text
     df['clean_text'] = df['text'].apply(clean_text_data)
     text = ' '.join(df['clean_text'].dropna())
     wordcloud = WordCloud().generate(text)
@@ -27,7 +35,15 @@ def create_wordcloud(df: pd.DataFrame):
 
     return buffer
 
-def plot_label_count(df: pd.DataFrame):
+def plot_label_count(df: pd.DataFrame) -> io.BytesIO:
+    """Creates an image with the frequency of the target labels
+
+    Args:
+        df (pd.DataFrame): the input dataframe
+
+    Returns:
+        io.BytesIO: BytesIO object containing the label count image in PNG format.
+    """
     label_counts = df[['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'L', 'M', 'N', 'Z']].sum()
 
     label_df = pd.DataFrame(label_counts, columns=['Count']).reset_index()
@@ -48,14 +64,14 @@ def plot_label_count(df: pd.DataFrame):
     return buffer
 
 
-def correlation_between_labels(df):
-    """_summary_
+def correlation_between_labels(df: pd.DataFrame) -> io.BytesIO:
+    """Creates an image of the correlation between the target labels
 
     Args:
-        df (_type_): _description_
+        df (pd.DataFrame): the iput dataframe
 
     Returns:
-        _type_: _description_
+        io.BytesIO: BytesIO object containing the label correlation image in PNG format.
     """
     label_columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'L', 'M', 'N', 'Z']
     label_df = df[label_columns]
@@ -75,7 +91,15 @@ def correlation_between_labels(df):
 
     return buffer
 
-def  count_most_common_mesh(df: pd.DataFrame):
+def  count_most_common_mesh(df: pd.DataFrame) -> io.BytesIO:
+    """Creates an image containing the frequency of the most common mesh
+
+    Args:
+        df (pd.DataFrame): the input dataframe
+
+    Returns:
+        io.BytesIO: BytesIO object containing the frequency of the most common mesh image in PNG format.
+    """
     
     total_mesh = chain.from_iterable(df['meshMajor'])
     mesh_counts = Counter(total_mesh)
@@ -93,7 +117,15 @@ def  count_most_common_mesh(df: pd.DataFrame):
 
     return buffer
 
-def draw_text_length_distribution(df:pd.DataFrame):
+def draw_text_length_distribution(df:pd.DataFrame) -> io.BytesIO:
+    """Creates an image with the text length distribution
+
+    Args:
+        df (pd.DataFrame): the imput dataframe
+
+    Returns:
+        io.BytesIO: BytesIO object containing the text length distribution image in PNG format.
+    """
 
     count, bins_count = np.histogram([len(text.split()) for text in df['text']], bins=100)
     
