@@ -49,6 +49,14 @@ def plot_label_count(df: pd.DataFrame):
 
 
 def correlation_between_labels(df):
+    """_summary_
+
+    Args:
+        df (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     label_columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'L', 'M', 'N', 'Z']
     label_df = df[label_columns]
 
@@ -87,7 +95,6 @@ def  count_most_common_mesh(df: pd.DataFrame):
 
 def draw_text_length_distribution(df:pd.DataFrame):
 
-    # _, _ = plt.subplots()
     count, bins_count = np.histogram([len(text.split()) for text in df['text']], bins=100)
     
     pdf = count / sum(count)
