@@ -23,7 +23,7 @@ This project integrates two major components: a multilabel classification task o
 
 2. **Similar Article recommendation**: 
    - This system uses Elasticsearch for indexing documents and to retrieve similar articles.
-   - It employs embedding similarity retrieval methods and applies a ranker to the relevant documents for better results.
+   - It employs embedding similarity retrieval methods and applies a reranker to the relevant documents for better results.
 
 ## Multilabel Classification
 The **PubMed dataset** is used for training a model that predicts multiple labels for each biomedical abstract. The model is fine-tuned to predict categories of research papers, such as disease areas, research types, etc.
