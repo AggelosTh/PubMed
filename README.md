@@ -85,18 +85,27 @@ The Similar Article recommendation system indexes the Aminer DBLPv11 dataset abs
 ## Set up
 
 Follow the steps below to create the Conda environment for this project.
-You need to set up an Elasticsearch cluster first! 
+
+First you need to set up an Elasticsearch cluster. 
+To install Elasticsearch follow the instructions in the documentation:\
+[Install Elasticsearch from archive on Linux or MacOS](https://www.elastic.co/guide/en/elasticsearch/reference/current/targz.html)\
+[Install Elasticsearch with .zip on Windows](https://www.elastic.co/guide/en/elasticsearch/reference/current/zip-windows.html)\
+[Install Elasticsearch with Docker](https://www.elastic.co/guide/en/elasticsearch/reference/8.15/docker.html)
+
+
 
 ### Create the Conda Environment
 
 To create the environment from the provided `environment.yml` file:
 
-1. Open **Anaconda Prompt** or **Command Prompt**.
-2. Navigate to the directory where the `environment.yml` file is located.
-3. Run the following command to create the environment:
+1. Run the following command to create the environment:
 
 ```bash
 conda env create -f environment.yml
+```
+2. Then activate the environment by executing:
+```bash
+conda activate wiley
 ```
 
 ## How to run
