@@ -85,8 +85,7 @@ The Similar Article recommendation system indexes the Aminer DBLPv11 dataset abs
 ## Set up
 
 Follow the steps below to create the Conda environment for this project.
-
-You need to set up an Elasticsaerch cluster first! 
+You need to set up an Elasticsearch cluster first! 
 
 ### Create the Conda Environment
 
