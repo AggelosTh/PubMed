@@ -43,11 +43,12 @@ async def index_documents(index_name: str):
 
 
 @app.post('/retrieve_documents')
-async def retrieve_documents(query: str, index_name: str, num_of_documents: int, rerank: bool = True)-> dict:
+async def retrieve_documents(title: str, abstract: str, index_name: str, num_of_documents: int, rerank: bool = True)-> dict:
     """Retrieve documents endpoint
 
     Args:
-        query (str): the provided query
+        title (str): the provided title
+        abstract (str): the provided abstract
         index_name (str): the name of the index
         num_of_documents (int): the number of the maximum documents to be retrieved
         rerank (bool, optional): apply the reranker. Defaults to True.
@@ -56,7 +57,8 @@ async def retrieve_documents(query: str, index_name: str, num_of_documents: int,
         dict: the documents retrieved
     """
     documents = elasticsearch_utils.retrieve_documents(
-        query=query,
+        title=title,
+        abstract=abstract,
         index_name=index_name,
         num_of_documents=num_of_documents,
         rerank=rerank

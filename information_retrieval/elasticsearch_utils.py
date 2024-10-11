@@ -83,28 +83,29 @@ def index_documents(index_name: str, path: str = path_documents):
                 print(f"Document failed to index:\n{doc['title']}\n")
     print("Total documents indexed: ", len(documents))
 
-def rerank_documents(query: str, documents: list[dict]) -> list[dict]:
+def rerank_documents(abstract: str, documents: list[dict]) -> list[dict]:
     """Apply a reranker on documents based on a query
 
     Args:
-        query (str): the provided query
+        abstract (str): the provided abstract
         documents (list[dict]): the documents to be reranked
 
     Returns:
         list[dict]: the reranked documents
     """
-    document_pairs = [[query, doc["title"] + ' ' + doc['abstract']] for doc in documents]
+    document_pairs = [[abstract, doc["title"] + ' ' + doc['abstract']] for doc in documents]
     scores = reranker.predict(document_pairs)
     reranked_documents_and_scores = sorted(zip(scores, documents), key=lambda x: x[0], reverse=True)
 
     return [document for _, document in reranked_documents_and_scores]
 
 
-def retrieve_documents(query: str, index_name: str, num_of_documents: int, rerank: bool = True)-> list[dict]:
+def retrieve_documents(title: str, abstract: str, index_name: str, num_of_documents: int, rerank: bool = True)-> list[dict]:
     """Retrieve documents from the elasticsearch index based on a query
 
     Args:
-        query (str): the provided query
+        title (str): the provided title
+        abstract (str): the provided abstract
         index_name (str): the name of the index
         num_of_documents (int): the maximum number of documents to retrieve
         rerank (bool, optional): apply a reranker. Defaults to True.
@@ -113,7 +114,8 @@ def retrieve_documents(query: str, index_name: str, num_of_documents: int, reran
         list[dict]: the retrieved documents
     """
     documents = []
-    query_embedding = sbert.encode(query)
+    # Encode the concatenation of the title and abstract
+    query_embedding = sbert.encode(title + ' ' + abstract)
     # Use knn query on the document embeddings
     search_query = {
         "knn": {
@@ -121,13 +123,14 @@ def retrieve_documents(query: str, index_name: str, num_of_documents: int, reran
             "query_vector": query_embedding, 
             "k": num_of_documents,  
             "num_candidates": 100
-    }
+    },
+    "_source": {"excludes": ["embedding", "references"]}
     }
     response = es.knn_search(index=index_name, body=search_query)
     for res in response["hits"]["hits"]:
          documents.append(res['_source'])
 
     if rerank:
-        # Apply the reranker
-        documents = rerank_documents(query=query, documents=documents)
+        # Apply the reranker on the abstract
+        documents = rerank_documents(abstract=abstract, documents=documents)
     return documents     
