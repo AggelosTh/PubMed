@@ -96,9 +96,9 @@ To create the environment from the provided `environment.yml` file:
 2. Navigate to the directory where the `environment.yml` file is located.
 3. Run the following command to create the environment:
 
-   ```bash
-   conda env create -f environment.yml
-
+```bash
+conda env create -f environment.yml
+```
 
 ## How to run
 
