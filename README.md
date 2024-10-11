@@ -12,7 +12,8 @@ Both applications are built with **FastAPI** and packaged using **Conda** for th
 - [Similar Article recommendation](#similar-article-recommendation)
 - [Setup](#setup)
 - [How to Run](#how-to-run)
-- 
+
+
 ## Project Overview
 This project integrates two major components: a multilabel classification task on biomedical literature and an Similar Article recommendation system to search and rank documents. Both systems are exposed as APIs via FastAPI.
 
