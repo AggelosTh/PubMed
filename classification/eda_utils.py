@@ -50,10 +50,11 @@ def plot_label_count(df: pd.DataFrame) -> io.BytesIO:
     label_df.columns = ['Label', 'Count']
 
     plt.figure(figsize=(16, 16))
-    sns.barplot(x='Label', y='Count', data=label_df, palette='viridis')
-    plt.title('Count of Each Label in the Dataset')
-    plt.xlabel('Label')
-    plt.ylabel('Count')
+    ax = sns.barplot(x='Label', y='Count', data=label_df, palette='viridis')
+    ax.set_xticklabels(ax.get_xticklabels(), fontsize=34)
+    plt.title('Total number of Labels', fontsize=20)
+    plt.xlabel('Label', fontsize=20)
+    plt.ylabel('Count', fontsize=20)
     plt.tight_layout()
 
     buffer = io.BytesIO()
@@ -105,17 +106,25 @@ def  count_most_common_mesh(df: pd.DataFrame) -> io.BytesIO:
     mesh_counts = Counter(total_mesh)
     most_common_mesh = mesh_counts.most_common(20)
     mesh, counts = zip(*most_common_mesh)
+    
     plt.figure(figsize=(16, 16))
-    sns.barplot(x=mesh, y=counts, palette='pastel')
-    plt.xticks(rotation=45)
-    plt.title('Top 20 Mesh terms')
-
+    
+    ax = sns.barplot(x=mesh, y=counts, palette='pastel')
+    
+    ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha="right", fontsize=14)
+    ax.set_yticklabels(ax.get_yticks(), fontsize=14)
+    
+    plt.title('Top 20 Mesh Terms', fontsize=20)
+    plt.xlabel('Mesh Terms', fontsize=16)
+    plt.ylabel('Count', fontsize=16)
+    
     buffer = io.BytesIO()
     plt.savefig(buffer, format='png')
     plt.close()
     buffer.seek(0)
 
     return buffer
+
 
 def draw_text_length_distribution(df:pd.DataFrame) -> io.BytesIO:
     """Creates an image with the text length distribution
