@@ -18,9 +18,6 @@ df['abstractText'] = df['abstractText'].astype('string')
 df['text'] = df['Title'] + ' ' + df['abstractText']
 
 print(df.head())
-logger.info(df.info())
 
 df['meshMajor'] = df['meshMajor'].apply(ast.literal_eval)
-
 df['word_count'] = df['text'].apply(lambda x: len(x.split()))
-print(df['word_count'].describe())

@@ -15,7 +15,7 @@ async def lifespan(app: FastAPI):
     # Load the ML model
     model = SBertModel(384, 14)
     model.to(device=device)
-    model.load_state_dict(torch.load('best_model_multilayers.pth'))
+    model.load_state_dict(torch.load('best_model_latest.pth'))
     model.eval()
     ml_model["answer"] = model
     yield
