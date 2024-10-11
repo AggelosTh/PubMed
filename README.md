@@ -9,7 +9,7 @@ Both applications are built with **FastAPI** and packaged using **Conda** for th
 ## Table of Contents
 - [Project Overview](#project-overview)
 - [Multilabel Classification](#multilabel-classification)
-- [Similar Article recommendation](#information-retrieval)
+- [Similar Article recommendation](#similar-article-recommendation)
 - [Setup](#setup)
 - [How to Run](#how-to-run)
 - 
