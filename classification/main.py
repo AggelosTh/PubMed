@@ -19,7 +19,6 @@ async def lifespan(app: FastAPI):
     model.eval()
     ml_model["answer"] = model
     yield
-    # Clean up the ML models and release the resources
     ml_model.clear()
 
 app = FastAPI(lifespan=lifespan, debug=True)
