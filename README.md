@@ -10,7 +10,7 @@ Both applications are built with **FastAPI** and packaged using **Conda** for th
 - [Project Overview](#project-overview)
 - [Multilabel Classification](#multilabel-classification)
 - [Similar Article recommendation](#similar-article-recommendation)
-- [Setup](#setup)
+- [Set up](#set-up)
 - [How to Run](#how-to-run)
 
 
@@ -82,11 +82,13 @@ The Similar Article recommendation system indexes the Aminer DBLPv11 dataset abs
         - `rerank` (bool, optional) – whether to rerank the results using a reranker (default is `True`).
     - **Output**: A list of documents matching the query.
 
-## Setting up the Conda Environment
+## Set up
 
 Follow the steps below to create the Conda environment for this project.
 
-### 1. Create the Conda Environment
+You need to set up an Elasticsaerch cluster first! 
+
+### Create the Conda Environment
 
 To create the environment from the provided `environment.yml` file:
 
@@ -96,3 +98,11 @@ To create the environment from the provided `environment.yml` file:
 
    ```bash
    conda env create -f environment.yml
+
+
+## How to run
+
+1. Navigate to the one of the folders (classification or information retrieval)
+2. Execute `uvicorn main:app --reload` to start the FastAPI application
+3. The application will be available for execution at [http://localhost:9200/docs](http://localhost:9200/docs)
+
