@@ -110,7 +110,10 @@ conda activate wiley
 
 ## How to run
 
-1. Navigate to the one of the folders (classification or information retrieval)
-2. Execute `uvicorn main:app --reload` to start the FastAPI application
-3. The application will be available for execution at [http://localhost:9200/docs](http://localhost:9200/docs)
+1. Download the data files from the google drive 
+2. Move the PubMed_Multi_Label_Text_Classification.csv file into the classification folder
+3. Move the dblpv11_sample.json file into the information_retrieval folder
+4. Navigate to the one of the folders (classification or information retrieval)
+5. Execute `uvicorn main:app --reload` to start the FastAPI application
+6. The application will be available for execution at [http://localhost:9200/docs](http://localhost:9200/docs)
 
