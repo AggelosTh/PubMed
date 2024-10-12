@@ -23,7 +23,7 @@ This project integrates two major components: a multilabel classification task o
 
 2. **Similar Article recommendation**: 
    - This system uses Elasticsearch for indexing documents and to retrieve similar articles.
-   - It employs embedding similarity retrieval methods and applies a ranker to the relevant documents for better results.
+   - It employs embedding similarity retrieval methods and applies a reranker to the relevant documents for better results.
 
 ## Multilabel Classification
 The **PubMed dataset** is used for training a model that predicts multiple labels for each biomedical abstract. The model is fine-tuned to predict categories of research papers, such as disease areas, research types, etc.
@@ -110,7 +110,10 @@ conda activate wiley
 
 ## How to run
 
-1. Navigate to the one of the folders (classification or information retrieval)
-2. Execute `uvicorn main:app --reload` to start the FastAPI application
-3. The application will be available for execution at [http://localhost:9200/docs](http://localhost:9200/docs)
+1. Download the data files from the google drive 
+2. Move the **PubMed_Multi_Label_Text_Classification.csv** file into the classification folder
+3. Move the **dblpv11_sample.json** file into the information_retrieval folder
+4. Navigate to the one of the folders (classification or information retrieval)
+5. Execute `uvicorn main:app --reload` to start the FastAPI application
+6. The application will be available for execution at [http://localhost:9200/docs](http://localhost:9200/docs)
 
